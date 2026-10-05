@@ -1,0 +1,38 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import { BUSINESS, MAILTO_HREF } from "@/consts";
+
+const trail = [
+  { name: "Home", href: "/" },
+  { name: "Privacy", href: "/privacy/" },
+];
+---
+
+<BaseLayout title="Privacy" description="How Dusty Bins handles your information.">
+  <div class="wrap max-w-3xl py-10">
+    <Breadcrumbs trail={trail} />
+    <h1 class="display mt-4 text-4xl">Privacy</h1>
+    <div class="mt-8 space-y-5 text-[1.0625rem] leading-relaxed">
+      <p>
+        This website is run by {BUSINESS.legalName}, {BUSINESS.addressLines.join(", ")}.
+      </p>
+      <h2 class="display pt-4 text-2xl">What we collect</h2>
+      <p>
+        The website itself doesn't use cookies, analytics or forms, and doesn't ask for any personal information. Our
+        web host may keep standard server logs (such as IP addresses) for security.
+      </p>
+      <p>
+        If you phone or email us, we'll use the details you give us — your name, contact details and what you're
+        enquiring about — to answer your enquiry and, if you order, to supply and invoice your order. We keep these
+        records for as long as we need them for that and for our accounts.
+      </p>
+      <h2 class="display pt-4 text-2xl">Your rights</h2>
+      <p>
+        You can ask to see, correct or delete the information we hold about you by emailing
+        <a href={MAILTO_HREF} class="text-brand-700 underline">{BUSINESS.email}</a>. If you're unhappy with how we've
+        handled your information, you can complain to the Information Commissioner's Office (ico.org.uk).
+      </p>
+    </div>
+  </div>
+</BaseLayout>

@@ -1,0 +1,97 @@
+---
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import ProductCard from "@/components/ProductCard.astro";
+import { ancestry, getDepartments, getProducts, plural } from "@/lib/catalog";
+import { breadcrumbList } from "@/lib/schema";
+
+const products = await getProducts();
+const departments = (await getDepartments()).filter((department) => department.products.length > 0);
+const trail = [
+  { name: "Home", href: "/" },
+  { name: "All products", href: "/all-products/" },
+];
+
+/** Department ids a product appears under, for the filter. */
+const departmentsOf = (product: (typeof products)[number]) =>
+  [...new Set(product.listedIn.map((category) => ancestry(category)[0].id))].join(" ");
+---
+
+<BaseLayout
+  title="All products"
+  description="Every recycling bin, litter bin and wheelie bin in the Dusty Bins range. Choose your options and ask us for a quote."
+  schema={[breadcrumbList(trail)]}
+>
+  <div class="border-b border-stone-200 bg-brand-50">
+    <div class="wrap py-10">
+      <Breadcrumbs trail={trail} />
+      <h1 class="display mt-4 text-4xl sm:text-5xl">All products</h1>
+      <fieldset class="mt-6" data-filter>
+        <legend class="sr-only">Show</legend>
+        <div class="flex flex-wrap gap-2">
+          {
+            [{ id: "", title: "Everything", products }, ...departments].map((department, i) => (
+              <label class="cursor-pointer">
+                <input type="radio" name="department" value={department.id} checked={i === 0} class="peer sr-only" />
+                <span class="inline-flex items-center gap-1.5 rounded-full border border-stone-300 bg-white px-4 py-2 text-sm font-semibold peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-600 hover:border-ink">
+                  {department.title}
+                  <span class="font-normal opacity-60">{department.products.length}</span>
+                </span>
+              </label>
+            ))
+          }
+        </div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="wrap mt-8">
+    <p class="text-sm text-stone-500" data-count aria-live="polite">{plural(products.length, "product")}</p>
+    <div class="mt-4 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" data-grid>
+      {
+        products.map((product, i) => (
+          <div class="contents" data-departments={departmentsOf(product)}>
+            <ProductCard product={product} loading={i < 5 ? "eager" : "lazy"} />
+          </div>
+        ))
+      }
+    </div>
+  </div>
+
+  <ContactBand />
+</BaseLayout>
+
+<script>
+  // Department filter. The choice goes in the URL (?department=recycle-hub) so
+  // a filtered list can be linked to.
+  const filter = document.querySelector<HTMLFieldSetElement>("[data-filter]")!;
+  const items = [...document.querySelectorAll<HTMLElement>("[data-grid] > [data-departments]")];
+  const count = document.querySelector("[data-count]")!;
+
+  function apply(department: string) {
+    let shown = 0;
+    for (const item of items) {
+      const match = !department || item.dataset.departments!.split(" ").includes(department);
+      item.hidden = !match;
+      if (match) shown++;
+    }
+    count.textContent = `${shown} ${shown === 1 ? "product" : "products"}`;
+  }
+
+  const initial = new URLSearchParams(location.search).get("department") ?? "";
+  const radio = filter.querySelector<HTMLInputElement>(`input[value="${CSS.escape(initial)}"]`);
+  if (radio) {
+    radio.checked = true;
+    apply(initial);
+  }
+
+  filter.addEventListener("change", (event) => {
+    const department = (event.target as HTMLInputElement).value;
+    apply(department);
+    const url = new URL(location.href);
+    if (department) url.searchParams.set("department", department);
+    else url.searchParams.delete("department");
+    history.replaceState(null, "", url);
+  });
+</script>

@@ -1,0 +1,35 @@
+---
+// Sidebar list of categories that have products, opened along the path to the
+// current page. Renders itself for each opened level.
+import type { Category } from "@/lib/catalog";
+
+interface Props {
+  nodes: Category[];
+  current: string;
+  open: Set<string>;
+  depth?: number;
+}
+
+const { nodes, current, open, depth = 0 } = Astro.props;
+const stocked = nodes.filter((node) => node.products.length > 0);
+---
+
+{
+  stocked.length > 0 && (
+    <ul class:list={["space-y-0.5 text-sm", depth === 0 ? "mt-3" : "mt-0.5 ml-3 border-l border-stone-200 pl-2"]}>
+      {stocked.map((node) => (
+        <li>
+          <a
+            href={node.href}
+            aria-current={node.id === current ? "page" : undefined}
+            class="flex justify-between gap-2 rounded-md px-3 py-1.5 hover:bg-stone-100 aria-[current=page]:bg-brand-100 aria-[current=page]:font-semibold aria-[current=page]:text-ink"
+          >
+            {node.title}
+            <span class="text-stone-400">{node.products.length}</span>
+          </a>
+          {open.has(node.id) && <Astro.self nodes={node.children} current={current} open={open} depth={depth + 1} />}
+        </li>
+      ))}
+    </ul>
+  )
+}

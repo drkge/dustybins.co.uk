@@ -1,0 +1,33 @@
+---
+import { Icon } from "astro-icon/components";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import { TEL_HREF, BUSINESS } from "@/consts";
+---
+
+<BaseLayout title="Page not found" noindex>
+  <div class="wrap max-w-2xl py-24 text-center">
+    <p class="eyebrow text-brand-700">404</p>
+    <h1 class="display mt-3 text-4xl sm:text-5xl">We can't find that page</h1>
+    <p class="mt-4 text-lg text-stone-600">
+      The page may have moved. Try searching for the bin you need, or give us a call.
+    </p>
+    <form action="/search/" method="get" role="search" class="mx-auto mt-8 flex max-w-md gap-2">
+      <label for="q404" class="sr-only">Search products</label>
+      <input
+        id="q404"
+        type="search"
+        name="q"
+        placeholder="Search bins"
+        class="h-12 flex-1 rounded-lg border border-stone-300 px-4 text-ink focus:border-ink focus:outline-none"
+      />
+      <button class="btn btn-primary">Search</button>
+    </form>
+    <div class="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+      <a href="/all-products/" class="btn btn-outline">Browse all products</a>
+      <a href={TEL_HREF} class="btn btn-outline">
+        <Icon name="lucide:phone" class="size-5" />
+        {BUSINESS.telephoneDisplay}
+      </a>
+    </div>
+  </div>
+</BaseLayout>

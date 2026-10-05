@@ -1,0 +1,102 @@
+---
+// Import the global.css file here so that it is included on
+// all pages through the use of the <BaseHead /> component.
+import "../styles/global.css";
+import archivo from "@fontsource-variable/archivo/files/archivo-latin-standard-normal.woff2?url";
+import { SITE_TITLE, SITE_TAGLINE, SITE_DESCRIPTION, OG_IMAGE, BUSINESS, SITE_URL } from "../consts";
+
+interface Props {
+  title: string;
+  description?: string;
+  /** Absolute or root-relative social image; defaults to the site card. */
+  image?: string;
+  schema?: Record<string, any>[];
+  noindex?: boolean;
+}
+
+const { title, description = SITE_DESCRIPTION, image = OG_IMAGE.src, schema = [], noindex = false } = Astro.props;
+
+const pageTitle = title === SITE_TITLE ? `${SITE_TITLE} — ${SITE_TAGLINE}` : `${title} | ${SITE_TITLE}`;
+const canonicalURL = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL(image, Astro.site).href;
+
+const organization = {
+  "@type": "Organization",
+  "@id": `${SITE_URL}/#organization`,
+  name: BUSINESS.name,
+  legalName: BUSINESS.legalName,
+  url: SITE_URL,
+  logo: `${SITE_URL}/favicon/android-chrome-512x512.png`,
+  email: BUSINESS.email,
+  telephone: BUSINESS.telephoneIntl,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: BUSINESS.address.street,
+    addressLocality: BUSINESS.address.locality,
+    addressRegion: BUSINESS.address.region,
+    postalCode: BUSINESS.address.postalCode,
+    addressCountry: BUSINESS.address.country,
+  },
+};
+
+const website = {
+  "@type": "WebSite",
+  "@id": `${SITE_URL}/#website`,
+  url: SITE_URL,
+  name: SITE_TITLE,
+  description: SITE_DESCRIPTION,
+  inLanguage: "en-GB",
+  publisher: { "@id": organization["@id"] },
+  potentialAction: {
+    "@type": "SearchAction",
+    target: `${SITE_URL}/search/?q={search_term_string}`,
+    "query-input": "required name=search_term_string",
+  },
+};
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [organization, website, ...schema],
+};
+---
+
+<!-- Global Metadata -->
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#ffffff" />
+
+<link rel="preload" href={archivo} as="font" type="font/woff2" crossorigin />
+
+<title>{pageTitle}</title>
+<meta name="description" content={description} />
+{
+  /* 404.html is served for any missing path, so a self-referencing
+     canonical there would point at the wrong URL. */
+  noindex ? <meta name="robots" content="noindex, follow" /> : <link rel="canonical" href={canonicalURL} />
+}
+<link rel="sitemap" href="/sitemap-index.xml" />
+
+<!-- Favicons -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon/favicon-16x16.png" />
+<link rel="apple-touch-icon" sizes="180x180" href="/favicon/apple-touch-icon.png" />
+<link rel="manifest" href="/favicon/site.webmanifest" />
+
+<!-- Open Graph -->
+<meta property="og:type" content="website" />
+<meta property="og:url" content={canonicalURL} />
+<meta property="og:site_name" content={SITE_TITLE} />
+<meta property="og:locale" content="en_GB" />
+<meta property="og:title" content={pageTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:image" content={socialImage} />
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={pageTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={socialImage} />
+
+<!-- Structured data -->
+<script type="application/ld+json" set:html={JSON.stringify(jsonLd)} is:inline />

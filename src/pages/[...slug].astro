@@ -1,0 +1,24 @@
+---
+// Categories and products share the root, as they did on the old BigCommerce
+// shop: /recycle-hub/litter-bins/ is a category, /heritage-square-litter-bin/
+// is a product. Keeping the old URLs keeps existing links and rankings.
+import type { GetStaticPaths } from "astro";
+import CategoryView from "@/views/CategoryView.astro";
+import ProductView from "@/views/ProductView.astro";
+import { getCategories, getProducts, type Category, type Product } from "@/lib/catalog";
+
+export const getStaticPaths = (async () => {
+  const categories = await getCategories();
+  const products = await getProducts();
+  return [
+    ...categories.map((category) => ({ params: { slug: category.id }, props: { category } })),
+    ...products.map((product) => ({ params: { slug: product.id }, props: { product } })),
+  ];
+}) satisfies GetStaticPaths;
+
+type Props = { category: Category; product?: undefined } | { product: Product; category?: undefined };
+
+const { category, product } = Astro.props;
+---
+
+{category ? <CategoryView category={category} /> : <ProductView product={product!} />}

@@ -1,0 +1,131 @@
+@import "tailwindcss";
+
+/* Archivo variable (weight and width axes), self-hosted. Display type uses
+   the same family at a wider stretch, so there's only one font file. */
+@import "@fontsource-variable/archivo/standard.css";
+
+@theme {
+  --font-sans: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Archivo Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+
+  /* Logo mint. 400 is the logo itself, for decoration and large shapes; 700 is
+     the accessible step for buttons and small text on white (5.3:1). */
+  --color-brand-50: #effaf5;
+  --color-brand-100: #d7f3e6;
+  --color-brand-200: #b0e6cf;
+  --color-brand-300: #7dd4b0;
+  --color-brand-400: #47bf8e;
+  --color-brand-500: #2ea676;
+  --color-brand-600: #1f8a60;
+  --color-brand-700: #18704e;
+  --color-brand-800: #155a40;
+  --color-brand-900: #0f3f2e;
+
+  /* Deep green-black for type and dark panels, so they sit with the mint. */
+  --color-ink: #10241b;
+}
+
+/* Cross-document view transitions, no JS. */
+@view-transition {
+  navigation: auto;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+  body {
+    @apply bg-white font-sans text-stone-700 antialiased;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply text-balance text-ink;
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-brand-600);
+    outline-offset: 3px;
+  }
+  /* Anchor targets shouldn't hide under the sticky header. */
+  [id] {
+    scroll-margin-top: 7rem;
+  }
+}
+
+@utility wrap {
+  @apply mx-auto w-full max-w-7xl px-4 sm:px-8;
+}
+
+@utility display {
+  @apply font-display font-extrabold tracking-tight;
+  font-stretch: 112%;
+}
+
+@utility eyebrow {
+  @apply text-xs font-semibold tracking-[0.16em] uppercase;
+}
+
+/* A mint marker stroke behind a word, echoing the logo. */
+@utility highlight {
+  background-image: linear-gradient(transparent 58%, var(--color-brand-300) 58%, var(--color-brand-300) 92%, transparent 92%);
+  padding-inline: 0.08em;
+  box-decoration-break: clone;
+}
+
+@layer components {
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-5 py-3 text-base font-semibold whitespace-nowrap transition-colors duration-150;
+  }
+  .btn-sm {
+    @apply gap-1.5 px-3.5 py-2 text-sm;
+  }
+  .btn-primary {
+    @apply bg-brand-700 text-white hover:bg-brand-800;
+  }
+  .btn-mint {
+    @apply bg-brand-400 text-ink hover:bg-brand-300;
+  }
+  .btn-dark {
+    @apply bg-ink text-white hover:bg-brand-900;
+  }
+  .btn-outline {
+    @apply border border-stone-300 bg-white text-ink hover:border-ink;
+  }
+
+  .skip-link {
+    @apply sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-100 focus:rounded-md focus:bg-white focus:px-4 focus:py-2 focus:font-semibold focus:text-ink focus:shadow-lg;
+  }
+
+  .code {
+    @apply font-mono text-xs font-medium tracking-wide text-stone-500;
+  }
+
+  /* Product descriptions, written in Markdown. */
+  .prose-body {
+    @apply space-y-4 text-[1.0625rem] leading-relaxed;
+    & h2,
+    & h3,
+    & h4 {
+      @apply pt-2 text-xl font-bold;
+    }
+    & strong {
+      @apply font-semibold text-ink;
+    }
+    & ul {
+      @apply list-disc space-y-2 pl-5 marker:text-brand-500;
+    }
+    & ol {
+      @apply list-decimal space-y-2 pl-5;
+    }
+    & a {
+      @apply text-brand-700 underline;
+    }
+  }
+}

@@ -1,0 +1,43 @@
+---
+// A product photo on a white tile, or a neutral placeholder when the product
+// doesn't have one yet.
+import type { ImageMetadata } from "astro";
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  image?: ImageMetadata;
+  alt: string;
+  sizes: string;
+  widths?: number[];
+  loading?: "eager" | "lazy";
+  class?: string;
+}
+
+const { image, alt, sizes, widths = [240, 360, 480, 720], loading = "lazy", class: className } = Astro.props;
+// Smaller copies where they help, plus the full-size original so high-DPI
+// screens get every pixel the photo has. Never ask for more than the source.
+const usable = image ? [...new Set([...widths.filter((w) => w < image.width), image.width])] : [];
+---
+
+<div class:list={["flex aspect-square items-center justify-center overflow-hidden bg-white p-[8%]", className]}>
+  {
+    image ? (
+      <Image
+        src={image}
+        alt={alt}
+        widths={usable}
+        sizes={sizes}
+        loading={loading}
+        class="size-full object-contain"
+        style={`max-width: ${image.width}px; max-height: ${image.height}px`}
+        data-photo
+      />
+    ) : (
+      <div class="flex flex-col items-center gap-2 text-stone-300" role="img" aria-label={`No photo yet of ${alt}`}>
+        <Icon name="lucide:image" class="size-10" />
+        <span class="text-xs font-medium text-stone-400">Photo coming soon</span>
+      </div>
+    )
+  }
+</div>

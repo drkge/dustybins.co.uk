@@ -1,0 +1,241 @@
+---
+import { Icon } from "astro-icon/components";
+import Logo from "./Logo.astro";
+import { getDepartments, stockedChildren } from "@/lib/catalog";
+import { BUSINESS, TEL_HREF, MAILTO_HREF } from "@/consts";
+
+/** Shorter menu labels where the category title is long. */
+const SHORT: Record<string, string> = {
+  "steel-wheelie-bins": "Steel Bins",
+  "plastic-wheelie-bins": "Plastic Bins",
+  "skip-parts-and-services": "Skip Parts",
+};
+
+const path = Astro.url.pathname;
+const departments = (await getDepartments()).map((department) => ({
+  ...department,
+  label: SHORT[department.id] ?? department.title,
+  current: path.startsWith(department.href),
+  links: stockedChildren(department),
+}));
+---
+
+<div class="hidden bg-ink text-sm text-stone-300 md:block">
+  <div class="wrap flex h-9 items-center justify-between">
+    <p>Recycling, litter &amp; wheelie bins · Coatbridge, delivering UK-wide</p>
+    <div class="flex items-center gap-6">
+      <a href={MAILTO_HREF} class="inline-flex items-center gap-2 transition-colors hover:text-white">
+        <Icon name="lucide:mail" class="size-4" />
+        {BUSINESS.email}
+      </a>
+      <a href={TEL_HREF} class="inline-flex items-center gap-2 font-semibold text-white transition-colors hover:text-brand-300">
+        <Icon name="lucide:phone" class="size-4" />
+        {BUSINESS.telephoneDisplay}
+      </a>
+    </div>
+  </div>
+</div>
+
+<header class="sticky top-0 z-40 border-b border-stone-200 bg-white/95 backdrop-blur supports-[backdrop-filter]:bg-white/85">
+  <div class="wrap flex h-20 items-center gap-4 lg:gap-6">
+    <Logo class="size-16" />
+
+    <nav aria-label="Main" class="hidden lg:block">
+      <ul class="flex items-center gap-0.5">
+        {
+          departments.map((department) => (
+            <li class="group relative">
+              <a
+                href={department.href}
+                aria-current={department.current ? "page" : undefined}
+                class="flex items-center gap-1 rounded-md px-2.5 py-2 font-semibold whitespace-nowrap text-stone-700 transition-colors hover:text-ink aria-[current=page]:text-brand-700 xl:px-3"
+              >
+                {department.label}
+                {department.links.length > 0 && <Icon name="lucide:chevron-down" class="size-4 text-stone-400" />}
+              </a>
+              {department.links.length > 0 && (
+                <div class="invisible absolute top-full left-0 pt-2 opacity-0 transition group-focus-within:visible group-focus-within:opacity-100 group-hover:visible group-hover:opacity-100">
+                  <ul
+                    class:list={[
+                      "rounded-xl border border-stone-200 bg-white p-2 text-sm shadow-xl shadow-stone-900/10",
+                      department.links.length > 8 ? "grid w-[34rem] grid-cols-2" : "w-64",
+                    ]}
+                  >
+                    <li class="col-span-full">
+                      <a href={department.href} class="block rounded-md px-3 py-2 font-semibold text-brand-700 hover:bg-brand-50">
+                        All {department.title.toLowerCase()} ({department.products.length})
+                      </a>
+                    </li>
+                    {department.links.map((link) => (
+                      <li>
+                        <a href={link.href} class="block rounded-md px-3 py-2 text-stone-700 hover:bg-brand-50 hover:text-ink">
+                          {link.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </li>
+          ))
+        }
+        <li>
+          <a
+            href="/contact/"
+            aria-current={path === "/contact/" ? "page" : undefined}
+            class="rounded-md px-2.5 py-2 font-semibold whitespace-nowrap text-stone-700 transition-colors hover:text-ink aria-[current=page]:text-brand-700 xl:px-3"
+          >
+            Contact
+          </a>
+        </li>
+      </ul>
+    </nav>
+
+    <a
+      href="/search/"
+      class="ml-auto hidden size-11 items-center justify-center rounded-lg border border-stone-200 text-ink hover:border-ink lg:inline-flex xl:hidden"
+      aria-label="Search"
+    >
+      <Icon name="lucide:search" class="size-5" />
+    </a>
+    <form action="/search/" method="get" role="search" class="ml-auto hidden md:block lg:hidden xl:block">
+      <label class="relative block">
+        <span class="sr-only">Search products</span>
+        <Icon name="lucide:search" class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-stone-400" />
+        <input
+          type="search"
+          name="q"
+          placeholder="Search bins"
+          class="h-11 w-44 rounded-lg border border-stone-300 bg-white pr-3 pl-9 text-sm text-ink placeholder:text-stone-400 focus:border-ink focus:outline-none xl:w-56"
+        />
+      </label>
+    </form>
+
+    <div class="ml-auto flex items-center gap-2 md:ml-0">
+      <a href="/contact/" class="btn btn-primary hidden sm:inline-flex">
+        <Icon name="lucide:message-square-text" class="size-4" />
+        Enquire
+      </a>
+      <a
+        href={TEL_HREF}
+        class="inline-flex size-11 items-center justify-center rounded-lg border border-stone-200 text-ink sm:hidden"
+        aria-label={`Call us on ${BUSINESS.telephoneDisplay}`}
+      >
+        <Icon name="lucide:phone" class="size-5" />
+      </a>
+      <button
+        type="button"
+        class="group inline-flex size-11 items-center justify-center rounded-lg border border-stone-200 text-ink lg:hidden"
+        aria-expanded="false"
+        aria-controls="mobile-menu"
+        aria-label="Menu"
+        data-menu-toggle
+      >
+        <Icon name="lucide:menu" class="size-5 group-aria-expanded:hidden" />
+        <Icon name="lucide:x" class="hidden size-5 group-aria-expanded:block" />
+      </button>
+    </div>
+  </div>
+
+  <div id="mobile-menu" class="max-h-[calc(100dvh-5rem)] overflow-y-auto border-t border-stone-200 bg-white lg:hidden" hidden>
+    <nav aria-label="Mobile" class="wrap py-4">
+      <form action="/search/" method="get" role="search" class="md:hidden">
+        <label class="relative block">
+          <span class="sr-only">Search products</span>
+          <Icon name="lucide:search" class="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-stone-400" />
+          <input
+            type="search"
+            name="q"
+            placeholder="Search bins"
+            class="h-12 w-full rounded-lg border border-stone-300 bg-white pr-3 pl-9 text-base text-ink placeholder:text-stone-400 focus:border-ink focus:outline-none"
+          />
+        </label>
+      </form>
+      <ul class="mt-2 divide-y divide-stone-100">
+        {
+          departments.map((department) => (
+            <li>
+              {department.links.length > 0 ? (
+                <details class="group">
+                  <summary class="flex cursor-pointer list-none items-center justify-between py-4 text-lg font-semibold text-ink [&::-webkit-details-marker]:hidden">
+                    {department.title}
+                    <Icon name="lucide:chevron-down" class="size-5 text-stone-400 transition group-open:rotate-180" />
+                  </summary>
+                  <ul class="grid gap-0.5 pb-4 sm:grid-cols-2">
+                    <li>
+                      <a href={department.href} class="block rounded-md px-3 py-2 font-semibold text-brand-700 hover:bg-brand-50">
+                        All {department.title.toLowerCase()}
+                      </a>
+                    </li>
+                    {department.links.map((link) => (
+                      <li>
+                        <a href={link.href} class="block rounded-md px-3 py-2 hover:bg-brand-50">
+                          {link.title}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </details>
+              ) : (
+                <a href={department.href} class="flex items-center justify-between py-4 text-lg font-semibold text-ink">
+                  {department.title}
+                  <Icon name="lucide:chevron-right" class="size-5 text-stone-400" />
+                </a>
+              )}
+            </li>
+          ))
+        }
+        <li>
+          <a href="/all-products/" class="flex items-center justify-between py-4 text-lg font-semibold text-ink">
+            All products
+            <Icon name="lucide:chevron-right" class="size-5 text-stone-400" />
+          </a>
+        </li>
+        <li>
+          <a href="/contact/" class="flex items-center justify-between py-4 text-lg font-semibold text-ink">
+            Contact
+            <Icon name="lucide:chevron-right" class="size-5 text-stone-400" />
+          </a>
+        </li>
+      </ul>
+      <div class="mt-4 grid gap-3 pb-2 sm:grid-cols-2">
+        <a href={TEL_HREF} class="btn btn-primary">
+          <Icon name="lucide:phone" class="size-4" />
+          {BUSINESS.telephoneDisplay}
+        </a>
+        <a href={MAILTO_HREF} class="btn btn-outline">
+          <Icon name="lucide:mail" class="size-4" />
+          Email us
+        </a>
+      </div>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>("[data-menu-toggle]");
+  const menu = document.getElementById("mobile-menu");
+
+  function setOpen(open: boolean) {
+    if (!toggle || !menu) return;
+    toggle.setAttribute("aria-expanded", String(open));
+    toggle.setAttribute("aria-label", open ? "Close menu" : "Menu");
+    menu.hidden = !open;
+  }
+
+  toggle?.addEventListener("click", () => {
+    setOpen(toggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && menu && !menu.hidden) {
+      setOpen(false);
+      toggle?.focus();
+    }
+  });
+
+  // The menu is lg:hidden, so close it if the window grows past that.
+  matchMedia("(min-width: 1024px)").addEventListener("change", (e) => {
+    if (e.matches) setOpen(false);
+  });
+</script>

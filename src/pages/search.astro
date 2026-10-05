@@ -1,0 +1,151 @@
+---
+import { getImage } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import { ancestry, getProducts, shortCapacity } from "@/lib/catalog";
+import { enquiryMailto } from "@/lib/enquiry";
+
+// The whole catalogue is small enough to search in the browser, so the page
+// carries a compact index and filters it as you type.
+const products = await getProducts();
+const index = await Promise.all(
+  products.map(async (product) => ({
+    name: product.name,
+    code: [shortCapacity(product), product.code].filter(Boolean).join(" · "),
+    codes: product.code ?? "",
+    category: product.listedIn.flatMap(ancestry).map((category) => category.title).join(" "),
+    href: product.href,
+    mailto: enquiryMailto(product),
+    image: product.photos[0]
+      ? (await getImage({ src: product.photos[0], width: Math.min(480, product.photos[0].width), format: "webp" })).src
+      : "",
+    // Natural size, so small photos aren't stretched past it.
+    w: product.photos[0]?.width ?? 0,
+    h: product.photos[0]?.height ?? 0,
+  })),
+);
+---
+
+<BaseLayout
+  title="Search"
+  description="Search Dusty Bins recycling bins, litter bins and wheelie bins by name, size or product code."
+  noindex
+>
+  <div class="border-b border-stone-200 bg-stone-50">
+    <div class="wrap py-10">
+      <h1 class="display text-4xl">Search</h1>
+      <form action="/search/" method="get" role="search" class="mt-6 max-w-2xl" data-search-form>
+        <label for="q" class="sr-only">Search by name, size or product code</label>
+        <input
+          id="q"
+          type="search"
+          name="q"
+          autocomplete="off"
+          placeholder="e.g. litter bin, 1100 litre, envirobank"
+          class="h-14 w-full rounded-xl border border-stone-300 bg-white px-5 text-lg text-ink placeholder:text-stone-400 focus:border-ink focus:outline-none"
+        />
+      </form>
+    </div>
+  </div>
+
+  <div class="wrap mt-8">
+    <p class="text-sm text-stone-500" data-summary aria-live="polite"></p>
+    <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5" data-results></div>
+    <noscript>
+      <p>Search needs JavaScript. You can <a href="/all-products/" class="text-brand-700 underline">browse all products</a> instead.</p>
+    </noscript>
+  </div>
+
+  <ContactBand title="Not finding it?" />
+
+  <template id="search-icons">
+    <Icon name="lucide:mail" class="size-4" data-icon="mail" />
+  </template>
+  <script type="application/json" id="search-index" set:html={JSON.stringify(index)} is:inline />
+</BaseLayout>
+
+<script>
+  type Entry = {
+    name: string;
+    code: string;
+    codes: string;
+    category: string;
+    href: string;
+    mailto: string;
+    image: string;
+    w: number;
+    h: number;
+  };
+
+  const index: Entry[] = JSON.parse(document.getElementById("search-index")!.textContent!);
+  const input = document.querySelector<HTMLInputElement>("#q")!;
+  const form = document.querySelector<HTMLFormElement>("[data-search-form]")!;
+  const results = document.querySelector<HTMLElement>("[data-results]")!;
+  const summary = document.querySelector<HTMLElement>("[data-summary]")!;
+  const icons = document.querySelector<HTMLTemplateElement>("#search-icons")!.content;
+  const mailIcon = icons.querySelector('[data-icon="mail"]')!.outerHTML;
+
+  // Codes are compared without spaces or hyphens so "81499 du" finds 81499-DU.
+  const squash = (s: string) => s.toLowerCase().replace(/[\s\-_/]+/g, "");
+  const haystacks = index.map((entry) => ({
+    words: `${entry.name} ${entry.category}`.toLowerCase(),
+    // The squashed name lets "1100l" find "1100 Litre".
+    codes: squash(`${entry.name} ${entry.codes}`),
+  }));
+
+  function search(query: string) {
+    const terms = query.toLowerCase().split(/\s+/).filter(Boolean);
+    if (!terms.length) return [];
+    return index.filter((_, i) => {
+      const { words, codes } = haystacks[i];
+      return terms.every((term) => words.includes(term) || codes.includes(squash(term)));
+    });
+  }
+
+  const escape = (s: string) =>
+    s.replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]!);
+
+  // Mirrors ProductCard.astro.
+  function card(entry: Entry) {
+    const photo = entry.image
+      ? `<img src="${escape(entry.image)}" alt="${escape(entry.name)}" loading="lazy" class="size-full object-contain" style="max-width: ${entry.w}px; max-height: ${entry.h}px" data-photo />`
+      : `<span class="text-xs font-medium text-stone-400">Photo coming soon</span>`;
+    const label = entry.code ? `<p class="code truncate">${escape(entry.code)}</p>` : "";
+    return `
+      <article class="group relative flex flex-col overflow-hidden rounded-xl border border-stone-200 bg-white transition hover:border-stone-400 hover:shadow-lg hover:shadow-stone-900/5" data-product>
+        <div class="flex aspect-square items-center justify-center border-b border-stone-100 bg-white p-[8%]">${photo}</div>
+        <div class="flex flex-1 flex-col p-4">
+          ${label}
+          <h2 class="mt-1 text-[0.95rem] leading-snug font-semibold text-ink">
+            <a href="${escape(entry.href)}" class="after:absolute after:inset-0 hover:text-brand-700">${escape(entry.name)}</a>
+          </h2>
+          <div class="mt-auto pt-4">
+            <a href="${escape(entry.mailto)}" class="btn btn-sm btn-outline relative z-10 w-full group-hover:border-brand-700 group-hover:text-brand-700" aria-label="Enquire about ${escape(entry.name)}">${mailIcon}Enquire</a>
+          </div>
+        </div>
+      </article>`;
+  }
+
+  function render(query: string) {
+    const found = search(query);
+    results.innerHTML = found.slice(0, 60).map(card).join("");
+    summary.textContent = !query.trim()
+      ? `Search ${index.length} products by name, size or product code.`
+      : found.length === 0
+        ? `Nothing matches “${query}”. Try fewer words, or give us a call.`
+        : `${found.length} ${found.length === 1 ? "product matches" : "products match"} “${query}”${found.length > 60 ? " — showing the first 60" : ""}.`;
+  }
+
+  input.value = new URLSearchParams(location.search).get("q") ?? "";
+  render(input.value);
+
+  input.addEventListener("input", () => {
+    render(input.value);
+    const url = new URL(location.href);
+    if (input.value) url.searchParams.set("q", input.value);
+    else url.searchParams.delete("q");
+    history.replaceState(null, "", url);
+  });
+  form.addEventListener("submit", (event) => event.preventDefault());
+</script>

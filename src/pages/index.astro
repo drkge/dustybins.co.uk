@@ -1,0 +1,248 @@
+---
+import { Image } from "astro:assets";
+import { Icon } from "astro-icon/components";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import ContactBand from "@/components/ContactBand.astro";
+import ProductCard from "@/components/ProductCard.astro";
+import ProductImage from "@/components/ProductImage.astro";
+import { coverImage, getCategory, getDepartments, getProducts, plural, stockedChildren } from "@/lib/catalog";
+import { BUSINESS, FEATURED_PRODUCTS, SITE_TITLE, WASTE_STREAMS } from "@/consts";
+import heroBins from "@/assets/home/recycling-bins.png";
+import recyclingAtHome from "@/assets/home/recycling-at-home.jpg";
+import recyclingBanks from "@/assets/home/recycling-banks.jpg";
+
+const products = await getProducts();
+const departments = (await getDepartments()).filter((department) => department.products.length > 0);
+const featured = FEATURED_PRODUCTS.map((id) => products.find((product) => product.id === id)).filter(
+  (product) => product !== undefined,
+);
+
+const streamIcons = import.meta.glob<ImageMetadata>("/src/assets/streams/*.png", { eager: true, import: "default" });
+const streams = await Promise.all(
+  WASTE_STREAMS.map(async (stream) => ({
+    ...stream,
+    image: streamIcons[`/src/assets/streams/${stream.icon}.png`],
+    category: await getCategory(stream.category),
+  })),
+);
+
+const wheelieBins = await Promise.all(["steel-wheelie-bins", "plastic-wheelie-bins"].map(getCategory));
+
+const steps = [
+  { icon: "lucide:search", title: "Find your bin", text: "Browse by type, size or waste stream, or search by name." },
+  {
+    icon: "lucide:sliders-horizontal",
+    title: "Pick your options",
+    text: "Choose colours, lids and extras on the product page, then press Enquire.",
+  },
+  {
+    icon: "lucide:truck",
+    title: "We'll send a quote",
+    text: "We'll confirm price, lead time and delivery. Trade and bulk rates available.",
+  },
+];
+---
+
+<BaseLayout title={SITE_TITLE}>
+  <section class="overflow-hidden border-b border-stone-200 bg-brand-50">
+    <div class="wrap grid items-center gap-12 py-14 lg:grid-cols-[1fr_1.1fr] lg:py-20">
+      <div>
+        <p class="eyebrow text-brand-700">Recycling, litter &amp; wheelie bins</p>
+        <h1 class="display mt-4 text-4xl leading-[1.05] sm:text-5xl lg:text-6xl">
+          Every bin you'll <span class="highlight whitespace-nowrap">ever need</span>
+        </h1>
+        <p class="mt-6 max-w-xl text-lg">
+          Recycling stations, litter bins, and galvanised steel and plastic wheelie bins for businesses, schools,
+          councils and homes — {products.length} products, delivered to your door.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          <a href="/all-products/" class="btn btn-primary">
+            Browse the range
+            <Icon name="lucide:arrow-right" class="size-5" />
+          </a>
+          <a href="/contact/" class="btn btn-outline">
+            <Icon name="lucide:message-square-text" class="size-5" />
+            Ask for a quote
+          </a>
+        </div>
+        <p class="mt-6 flex items-center gap-2 text-sm text-stone-600">
+          <Icon name="lucide:badge-percent" class="size-5 text-brand-600" />
+          Special rates for trade customers and bulk orders.
+        </p>
+      </div>
+
+      <div class="relative">
+        <div class="absolute -inset-x-6 -inset-y-4 -rotate-2 rounded-3xl bg-brand-400" aria-hidden="true"></div>
+        <div class="relative rounded-2xl bg-white p-4 shadow-xl shadow-stone-900/10 sm:p-6">
+          <Image
+            src={heroBins}
+            alt="A row of Envirobank recycling bins for paper, mixed recycling, general waste, plastic bottles and cans"
+            widths={[480, 720, heroBins.width]}
+            sizes="(min-width: 1024px) 600px, 92vw"
+            loading="eager"
+            class="w-full"
+          />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap mt-16" aria-labelledby="departments">
+    <h2 id="departments" class="display text-3xl">Shop by department</h2>
+    <div class="mt-6 grid gap-4 md:grid-cols-3">
+      {
+        departments.map((department) => (
+          <a
+            href={department.href}
+            class="group flex flex-col overflow-hidden rounded-xl border border-stone-200 transition hover:border-ink"
+          >
+            <ProductImage
+              image={coverImage(department)}
+              alt=""
+              sizes="(min-width: 768px) 30vw, 92vw"
+              class="aspect-[16/10]! border-b border-stone-100"
+            />
+            <div class="flex flex-1 flex-col p-6">
+              <span class="eyebrow text-stone-500">{plural(department.products.length, "product")}</span>
+              <span class="display mt-2 text-2xl group-hover:text-brand-700">{department.title}</span>
+              {department.description && <span class="mt-2 text-stone-600">{department.description}</span>}
+              <span class="mt-auto inline-flex items-center gap-1 pt-4 text-sm font-semibold text-brand-700">
+                {plural(stockedChildren(department).length, "category", "categories")}
+                <Icon name="lucide:arrow-right" class="size-4 transition group-hover:translate-x-0.5" />
+              </span>
+            </div>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="streams">
+    <div class="max-w-2xl">
+      <h2 id="streams" class="display text-3xl">Bins for every waste stream</h2>
+      <p class="mt-2 text-stone-600">
+        Separating waste where it's thrown away is the easiest way to recycle more. Pick a stream to see the bins made
+        for it.
+      </p>
+    </div>
+    <ul class="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-5">
+      {
+        streams.map((stream) => (
+          <li>
+            <a
+              href={stream.category.href}
+              class="group flex h-full flex-col items-center gap-3 rounded-xl border border-stone-200 p-5 text-center transition hover:border-brand-500 hover:bg-brand-50"
+            >
+              <Image src={stream.image} alt="" width={72} height={72} class="size-14 opacity-80 group-hover:opacity-100" />
+              <span class="font-semibold text-ink">{stream.name}</span>
+              <span class="-mt-2 text-xs text-stone-500">{plural(stream.category.products.length, "bin")}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="featured">
+    <div class="flex items-end justify-between gap-4">
+      <h2 id="featured" class="display text-3xl">Popular bins</h2>
+      <a href="/all-products/" class="hidden items-center gap-1 font-semibold text-brand-700 hover:underline sm:inline-flex">
+        View all
+        <Icon name="lucide:arrow-right" class="size-4" />
+      </a>
+    </div>
+    <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+      {featured.map((product) => <ProductCard product={product} />)}
+    </div>
+  </section>
+
+  <section class="wrap mt-20 grid items-center gap-10 lg:grid-cols-2" aria-labelledby="recycle-right">
+    <Image
+      src={recyclingAtHome}
+      alt="Sorting a bottle and an egg box into colour-coded recycling bins"
+      widths={[480, 720, 960, 1280]}
+      sizes="(min-width: 1024px) 600px, 92vw"
+      class="aspect-[4/3] w-full rounded-2xl object-cover"
+    />
+    <div>
+      <p class="eyebrow text-brand-700">Recycle right</p>
+      <h2 id="recycle-right" class="display mt-3 text-3xl sm:text-4xl">Recycle right, reimagine our future</h2>
+      <p class="mt-4 text-lg">
+        Good bins are the first step in the circular economy — keeping materials in use and waste out of landfill.
+      </p>
+      <dl class="mt-6 space-y-5">
+        <div>
+          <dt class="font-semibold text-ink">Smarter bins for homes</dt>
+          <dd class="mt-1 text-stone-600">
+            Wheelie bins in every size and colour, so sorting recycling at home is simple.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-ink">Recycling hubs for business</dt>
+          <dd class="mt-1 text-stone-600">
+            Clearly labelled recycling stations make it easy for staff and customers to do the right thing — and show
+            you take sustainability seriously.
+          </dd>
+        </div>
+        <div>
+          <dt class="font-semibold text-ink">Built to last</dt>
+          <dd class="mt-1 text-stone-600">
+            Galvanised steel and tough recycled plastics, made to EN840 where it applies, with spares available.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="wheelie">
+    <div class="grid overflow-hidden rounded-2xl bg-ink text-stone-300 lg:grid-cols-2">
+      <div class="p-8 sm:p-12">
+        <p class="eyebrow text-brand-400">Wheelie bins</p>
+        <h2 id="wheelie" class="display mt-3 text-3xl text-white sm:text-4xl">From 80 litres to 1280 litres</h2>
+        <p class="mt-4 text-lg">
+          Plastic two- and four-wheeled bins in a choice of body and lid colours, and galvanised steel containers
+          with lockable lids, tow fittings and DIN lifting points.
+        </p>
+        <div class="mt-8 flex flex-col gap-3 sm:flex-row">
+          {
+            wheelieBins.map((category) => (
+              <a href={category.href} class="btn btn-mint">
+                {category.title}
+                <Icon name="lucide:arrow-right" class="size-5" />
+              </a>
+            ))
+          }
+        </div>
+      </div>
+      <Image
+        src={recyclingBanks}
+        alt="A row of green recycling banks by the sea"
+        widths={[480, 720, 960, 1280]}
+        sizes="(min-width: 1024px) 600px, 100vw"
+        class="h-full min-h-64 w-full object-cover"
+      />
+    </div>
+  </section>
+
+  <section class="wrap mt-20" aria-labelledby="how">
+    <h2 id="how" class="display text-3xl">How ordering works</h2>
+    <ol class="mt-6 grid gap-4 md:grid-cols-3">
+      {
+        steps.map((step, i) => (
+          <li class="rounded-xl bg-stone-50 p-6">
+            <div class="flex items-center gap-3">
+              <span class="flex size-10 items-center justify-center rounded-full bg-ink text-white">
+                <Icon name={step.icon} class="size-5" />
+              </span>
+              <span class="eyebrow text-stone-500">Step {i + 1}</span>
+            </div>
+            <h3 class="mt-4 text-lg font-semibold">{step.title}</h3>
+            <p class="mt-1 text-stone-600">{step.text}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+
+  <ContactBand title={`Talk to ${BUSINESS.name}`} />
+</BaseLayout>

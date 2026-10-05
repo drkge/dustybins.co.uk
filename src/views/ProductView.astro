@@ -1,0 +1,307 @@
+---
+import { getImage } from "astro:assets";
+import { render } from "astro:content";
+import { Icon } from "astro-icon/components";
+import BaseLayout from "@/layouts/BaseLayout.astro";
+import Breadcrumbs from "@/components/Breadcrumbs.astro";
+import ProductCard from "@/components/ProductCard.astro";
+import ProductImage from "@/components/ProductImage.astro";
+import { ancestry, primaryCategory, type Product } from "@/lib/catalog";
+import { enquiryMailto } from "@/lib/enquiry";
+import { breadcrumbList } from "@/lib/schema";
+import { BUSINESS, SITE_URL, TEL_HREF } from "@/consts";
+
+interface Props {
+  product: Product;
+}
+
+const { product } = Astro.props;
+const { Content } = await render(product.entry);
+const category = primaryCategory(product);
+const related = category.products.filter((other) => other.id !== product.id).slice(0, 4);
+const specs = Object.entries(product.specs);
+
+const trail = [
+  { name: "Home", href: "/" },
+  ...ancestry(category).map((c) => ({ name: c.title, href: c.href })),
+  { name: product.name, href: product.href },
+];
+
+// First plain-text paragraph of the description, for search results.
+const firstParagraph = (product.entry.body ?? "")
+  .split(/\n{2,}/)
+  .map((block) => block.replace(/[*_#>`]/g, "").trim())
+  .find((block) => block.length > 60 && !block.startsWith("-"));
+const description =
+  firstParagraph && firstParagraph.length <= 300
+    ? firstParagraph
+    : `${product.name}${product.specs["Capacity"] ? `, ${product.specs["Capacity"].toLowerCase()}` : ""}, from Dusty Bins. Choose your options and ask us for a quote.`;
+
+const socialImage = product.photos[0] ? (await getImage({ src: product.photos[0], format: "png", width: Math.min(1200, product.photos[0].width) })).src : undefined;
+
+const productSchema = {
+  "@type": "Product",
+  name: product.name,
+  url: new URL(product.href, SITE_URL).href,
+  ...(product.code && { sku: product.code }),
+  description,
+  ...(socialImage && { image: new URL(socialImage, SITE_URL).href }),
+  brand: { "@type": "Brand", name: BUSINESS.name },
+  category: category.title,
+  ...(specs.length && {
+    additionalProperty: specs.map(([name, value]) => ({ "@type": "PropertyValue", name, value })),
+  }),
+};
+
+const hasChoices = product.options.length > 0 || product.extras.length > 0;
+const NONE = "None";
+---
+
+<BaseLayout
+  title={product.name}
+  description={description}
+  image={socialImage}
+  schema={[breadcrumbList(trail), productSchema]}
+>
+  <div class="wrap pt-8">
+    <Breadcrumbs trail={trail} />
+  </div>
+
+  <div class="wrap mt-8 grid gap-10 lg:grid-cols-[minmax(0,30rem)_1fr] lg:gap-16" data-product>
+    <div class="mx-auto w-full max-w-lg lg:sticky lg:top-28 lg:max-w-none lg:self-start">
+      <ProductImage
+        image={product.photos[0]}
+        alt={product.name}
+        sizes="(min-width: 640px) 480px, 100vw"
+        widths={[360, 480, 720, 960, 1200]}
+        loading="eager"
+        class="rounded-2xl border border-stone-200"
+      />
+      {
+        product.photos.length > 1 && (
+          <ul class="mt-3 grid grid-cols-5 gap-2.5" data-thumbs>
+            {product.photos.map((photo, i) => (
+              <li>
+                <button
+                  type="button"
+                  class="block w-full overflow-hidden rounded-lg border border-stone-200 aria-pressed:border-ink aria-pressed:ring-2 aria-pressed:ring-ink"
+                  aria-pressed={i === 0 ? "true" : "false"}
+                  aria-label={`Show photo ${i + 1} of ${product.photos.length}`}
+                  data-index={i}
+                >
+                  <ProductImage image={photo} alt="" sizes="96px" widths={[96, 192]} class="p-[4%]!" />
+                </button>
+              </li>
+            ))}
+          </ul>
+        )
+      }
+      {
+        /* Full-size versions for the thumbnails to swap in. */
+        product.photos.length > 1 && (
+          <template data-photos>
+            {product.photos.map((photo) => (
+              <ProductImage
+                image={photo}
+                alt={product.name}
+                sizes="(min-width: 640px) 480px, 100vw"
+                widths={[360, 480, 720, 960, 1200]}
+              />
+            ))}
+          </template>
+        )
+      }
+    </div>
+
+    <div>
+      <a href={category.href} class="eyebrow text-brand-700 hover:underline">{category.title}</a>
+      <h1 class="display mt-3 text-3xl leading-tight sm:text-4xl">{product.name}</h1>
+      {product.code && <p class="mt-2 font-mono text-sm text-stone-500">Code {product.code}</p>}
+
+      <form class="mt-8 space-y-6" data-enquiry-form data-name={product.name} data-code={product.code}>
+        {
+          product.options.map((option, i) => {
+            const swatch = option.choices.some((choice) => typeof choice !== "string");
+            const choices = option.optional ? [NONE, ...option.choices] : option.choices;
+            return (
+              <fieldset data-option={option.name}>
+                <legend class="text-sm font-semibold text-ink">
+                  {option.name}
+                  {option.optional && <span class="font-normal text-stone-500"> (optional)</span>}
+                  <span class="font-normal text-stone-600" data-picked />
+                </legend>
+                <div class="mt-2.5 flex flex-wrap gap-2">
+                  {choices.map((choice) => {
+                    const name = typeof choice === "string" ? choice : choice.name;
+                    return (
+                      <label class="cursor-pointer" title={swatch ? name : undefined}>
+                        <input
+                          type="radio"
+                          name={`option-${i}`}
+                          value={name === NONE ? "" : name}
+                          checked={name === NONE}
+                          class="peer sr-only"
+                        />
+                        {typeof choice !== "string" ? (
+                          <span class="flex size-9 items-center justify-center rounded-full border-2 border-transparent peer-checked:border-ink peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-600 hover:border-stone-400">
+                            <span
+                              class="size-7 rounded-full ring-1 ring-stone-900/15 ring-inset"
+                              style={`background: ${choice.colour}`}
+                            />
+                            <span class="sr-only">{name}</span>
+                          </span>
+                        ) : (
+                          <span class="inline-block rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm font-medium text-stone-700 peer-checked:border-ink peer-checked:bg-ink peer-checked:text-white peer-focus-visible:outline-3 peer-focus-visible:outline-offset-2 peer-focus-visible:outline-brand-600 hover:border-ink">
+                            {name}
+                          </span>
+                        )}
+                      </label>
+                    );
+                  })}
+                </div>
+              </fieldset>
+            );
+          })
+        }
+
+        {
+          product.extras.length > 0 && (
+            <fieldset data-extras>
+              <legend class="text-sm font-semibold text-ink">Optional extras</legend>
+              <div class="mt-2.5 grid gap-2 sm:grid-cols-2">
+                {product.extras.map((extra) => (
+                  <label class="flex cursor-pointer items-center gap-3 rounded-lg border border-stone-300 px-3 py-2.5 text-sm font-medium has-checked:border-ink has-checked:bg-brand-50 hover:border-ink">
+                    <input type="checkbox" value={extra} class="size-4 accent-brand-700" />
+                    {extra}
+                  </label>
+                ))}
+              </div>
+            </fieldset>
+          )
+        }
+
+        <div class="rounded-2xl bg-brand-50 p-6">
+          <div class="flex flex-wrap items-end gap-4">
+            <label class="block">
+              <span class="text-sm font-semibold text-ink">Quantity</span>
+              <input
+                type="number"
+                min="1"
+                inputmode="numeric"
+                placeholder="1"
+                class="mt-1.5 block h-12 w-24 rounded-lg border border-stone-300 bg-white px-3 text-ink focus:border-ink focus:outline-none"
+                data-quantity
+              />
+            </label>
+            <a href={enquiryMailto(product)} class="btn btn-primary h-12 flex-1" data-enquire>
+              <Icon name="lucide:mail" class="size-5" />
+              Enquire about this bin
+            </a>
+          </div>
+          <p class="mt-4 text-sm text-stone-600">
+            {hasChoices ? "Your choices go into the email, so we can quote straight away. " : ""}Prefer to talk? Call
+            <a href={TEL_HREF} class="font-semibold whitespace-nowrap text-ink underline">{BUSINESS.telephoneDisplay}</a>.
+          </p>
+        </div>
+      </form>
+
+      {
+        specs.length > 0 && (
+          <section class="mt-10" aria-labelledby="specs">
+            <h2 id="specs" class="text-lg font-bold">
+              Specifications
+            </h2>
+            <dl class="mt-3 divide-y divide-stone-100 overflow-hidden rounded-xl border border-stone-200 text-sm">
+              {specs.map(([name, value]) => (
+                <div class="grid grid-cols-[minmax(7rem,35%)_1fr] gap-4 px-4 py-2.5 odd:bg-stone-50">
+                  <dt class="font-semibold text-ink">{name}</dt>
+                  <dd>{value}</dd>
+                </div>
+              ))}
+            </dl>
+          </section>
+        )
+      }
+
+      {
+        product.entry.body?.trim() && (
+          <section class="mt-10" aria-labelledby="about">
+            <h2 id="about" class="text-lg font-bold">
+              About this bin
+            </h2>
+            <div class="prose-body mt-3 max-w-prose">
+              <Content />
+            </div>
+          </section>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    related.length > 0 && (
+      <section class="wrap mt-20" aria-labelledby="related">
+        <div class="flex items-end justify-between gap-4">
+          <h2 id="related" class="display text-2xl sm:text-3xl">
+            More {category.title.toLowerCase()}
+          </h2>
+          <a href={category.href} class="inline-flex shrink-0 items-center gap-1 font-semibold text-brand-700 hover:underline">
+            View all
+            <Icon name="lucide:arrow-right" class="size-4" />
+          </a>
+        </div>
+        <div class="mt-6 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {related.map((other) => <ProductCard product={other} />)}
+        </div>
+      </section>
+    )
+  }
+</BaseLayout>
+
+<script>
+  import { enquiryMailto } from "@/lib/enquiry";
+
+  // Thumbnails swap the main photo for the matching full-size one.
+  const thumbs = document.querySelector("[data-thumbs]");
+  const photos = document.querySelector<HTMLTemplateElement>("template[data-photos]");
+  const main = document.querySelector<HTMLImageElement>("[data-product] img[data-photo]");
+
+  thumbs?.addEventListener("click", (event) => {
+    const button = (event.target as HTMLElement).closest<HTMLButtonElement>("button[data-index]");
+    if (!button || !photos || !main) return;
+    const full = photos.content.querySelectorAll<HTMLImageElement>("img[data-photo]")[Number(button.dataset.index)];
+    if (!full) return;
+    main.srcset = full.srcset;
+    main.src = full.src;
+    main.style.cssText = full.style.cssText;
+    for (const other of thumbs.querySelectorAll("button")) other.setAttribute("aria-pressed", String(other === button));
+  });
+
+  // Picked options and extras go into the enquiry email.
+  const form = document.querySelector<HTMLFormElement>("[data-enquiry-form]");
+  const enquire = document.querySelector<HTMLAnchorElement>("[data-enquire]");
+  const quantity = document.querySelector<HTMLInputElement>("[data-quantity]");
+
+  function update() {
+    if (!form || !enquire) return;
+    const choices: [string, string][] = [];
+    for (const fieldset of form.querySelectorAll<HTMLFieldSetElement>("[data-option]")) {
+      const picked = fieldset.querySelector<HTMLInputElement>("input:checked")?.value ?? "";
+      const label = fieldset.querySelector("[data-picked]");
+      if (label) label.textContent = picked ? `· ${picked}` : "";
+      if (picked) choices.push([fieldset.dataset.option!, picked]);
+    }
+    const extras = [...form.querySelectorAll<HTMLInputElement>("[data-extras] input:checked")].map((input) => input.value);
+    if (extras.length) choices.push(["Extras", extras.join(", ")]);
+    enquire.href = enquiryMailto(
+      { name: form.dataset.name!, code: form.dataset.code || undefined },
+      choices,
+      quantity?.value ?? "",
+    );
+  }
+
+  form?.addEventListener("change", update);
+  quantity?.addEventListener("input", update);
+  form?.addEventListener("submit", (event) => event.preventDefault());
+  update();
+</script>
