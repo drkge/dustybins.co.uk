@@ -21,9 +21,9 @@ export const BUSINESS = {
   legalName: "Dusty Bins Limited",
   email: "dustybinsuk@outlook.com",
   /** As a UK visitor would read it. */
-  telephoneDisplay: "07968 122210",
+  telephoneDisplay: "07981 883340",
   /** E.164, for tel: links and structured data. */
-  telephoneIntl: "+447968122210",
+  telephoneIntl: "+447981883340",
   address: {
     street: "1 Cameron Street",
     locality: "Coatbridge",
