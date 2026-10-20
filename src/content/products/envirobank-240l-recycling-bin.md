@@ -1,5 +1,5 @@
 ---
-name: Envirobank 320L Recycling Bin
+name: Envirobank 240L Recycling Bin
 code: 81499-DU
 categories:
 - recycle-hub/external-bin/envirobank
@@ -20,7 +20,7 @@ images:
 - with-wheelie-bin.jpg
 specs:
   Dimensions: H:1419mm, W:741mm, D:871mm
-  Capacity: 320 litres
+  Capacity: 240 litres
   Materials: UV stabilised medium density moulded polyethylene (MDPE)
 options:
 - name: Aperture

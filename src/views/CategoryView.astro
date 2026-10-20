@@ -30,11 +30,16 @@ const BANNERS: Record<string, { src: ImageMetadata; alt: string }> = {
 };
 const banner = BANNERS[category.id];
 
+// Subcategory names repeat across departments ("660 Litre Capacity" is under both
+// steel and plastic wheelie bins), so name the department in the title and description.
+const inDepartment = category === department ? "" : ` (${department.title})`;
+const pageTitle = category === department ? category.title : `${category.title} | ${department.title}`;
+
 const description =
   category.description ??
   (products.length
-    ? `${category.title} from Dusty Bins: ${plural(products.length, "product")} to choose from. Ask us for a quote.`
-    : `${category.title} from Dusty Bins. Get in touch and we'll help you find the right bin.`);
+    ? `${category.title}${inDepartment} from Dusty Bins: ${plural(products.length, "product")} to choose from. Ask us for a quote.`
+    : `${category.title}${inDepartment} from Dusty Bins. Get in touch and we'll help you find the right bin.`);
 
 const trail = [{ name: "Home", href: "/" }, ...chain.map((c) => ({ name: c.title, href: c.href }))];
 
@@ -54,7 +59,7 @@ const open = new Set(chain.map((c) => c.id));
 const showTree = stockedChildren(department).length > 0;
 ---
 
-<BaseLayout title={category.title} description={description} schema={[breadcrumbList(trail), itemList]}>
+<BaseLayout title={pageTitle} description={description} schema={[breadcrumbList(trail), itemList]}>
   <div class="border-b border-stone-200 bg-brand-50">
     <div class="wrap py-10">
       <Breadcrumbs trail={trail} />
