@@ -9,7 +9,7 @@ import ProductImage from "@/components/ProductImage.astro";
 import { ancestry, primaryCategory, type Product } from "@/lib/catalog";
 import { enquiryMailto } from "@/lib/enquiry";
 import { breadcrumbList } from "@/lib/schema";
-import { BUSINESS, SITE_URL, TEL_HREF } from "@/consts";
+import { BUSINESS, TEL_HREF } from "@/consts";
 
 interface Props {
   product: Product;
@@ -39,19 +39,7 @@ const description =
 
 const socialImage = product.photos[0] ? (await getImage({ src: product.photos[0], format: "png", width: Math.min(1200, product.photos[0].width) })).src : undefined;
 
-const productSchema = {
-  "@type": "Product",
-  name: product.name,
-  url: new URL(product.href, SITE_URL).href,
-  ...(product.code && { sku: product.code }),
-  description,
-  ...(socialImage && { image: new URL(socialImage, SITE_URL).href }),
-  brand: { "@type": "Brand", name: BUSINESS.name },
-  category: category.title,
-  ...(specs.length && {
-    additionalProperty: specs.map(([name, value]) => ({ "@type": "PropertyValue", name, value })),
-  }),
-};
+// No Product schema: Google requires offers, reviews or a rating, and products have no listed price.
 
 const hasChoices = product.options.length > 0 || product.extras.length > 0;
 const NONE = "None";
@@ -61,7 +49,7 @@ const NONE = "None";
   title={product.name}
   description={description}
   image={socialImage}
-  schema={[breadcrumbList(trail), productSchema]}
+  schema={[breadcrumbList(trail)]}
 >
   <div class="wrap pt-8">
     <Breadcrumbs trail={trail} />
