@@ -24,6 +24,8 @@ export default defineConfig({
   site: SITE_URL,
   trailingSlash: "always",
   build: { format: "directory" },
+  // Astro 7 defaults to "jsx", which can drop spaces between inline elements.
+  compressHTML: true,
   // Category and product URLs match the old BigCommerce shop, so nothing needs
   // redirecting. Shop-only pages (/cart.php, /login.php) fall through to the 404.
   integrations: [

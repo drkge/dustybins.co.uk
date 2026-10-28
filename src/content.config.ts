@@ -1,5 +1,6 @@
 import { file, glob } from "astro/loaders";
-import { defineCollection, z } from "astro:content";
+import { defineCollection } from "astro:content";
+import { z } from "astro/zod";
 
 /** A category's URL path, e.g. "recycle-hub/litter-bins". */
 const categoryPath = z
@@ -39,7 +40,7 @@ const products = defineCollection({
     /** File names inside src/assets/products/<file name>/. The first is the main photo. */
     images: z.array(z.string()).default([]),
     /** Shown as a table, e.g. { Capacity: "1100 Litres", Height: "1410 mm" }. */
-    specs: z.record(z.string()).default({}),
+    specs: z.record(z.string(), z.string()).default({}),
     /** Choices the customer picks from, e.g. body colour. They go into the enquiry email. */
     options: z
       .array(
