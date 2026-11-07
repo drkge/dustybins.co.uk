@@ -1,5 +1,6 @@
 ---
 name: Meridian 87 Litre Cup and Liquids Recycling Bin
+description: 'Meridian 87 cup and liquids bin: pours away leftover drinks and collects cups in one compact office unit, 61 litres of waste. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/liquid-waste-bins

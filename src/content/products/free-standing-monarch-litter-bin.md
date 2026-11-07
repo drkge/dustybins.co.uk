@@ -1,5 +1,6 @@
 ---
 name: Free-Standing Monarch Litter Bin
+description: 'Monarch free-standing litter bin, 85 litres, a low-cost UV stabilised plastic bin for indoor and outdoor use. Choose colour and liner. Ask us for a quote.'
 code: 232-BL
 categories:
 - recycle-hub/litter-bins

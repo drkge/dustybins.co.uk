@@ -1,5 +1,7 @@
 ---
 name: EnviroStep 90 Litre Food Waste Recycling Bin
+title: EnviroStep 90L Pedal Food Waste Bin
+description: 'EnviroStep 90 litre pedal-operated food waste bin, hands-free and hygienic for kitchens, catering areas and food halls. Ask us for a quote.'
 categories:
 - recycle-hub/food-waste-bins
 images:

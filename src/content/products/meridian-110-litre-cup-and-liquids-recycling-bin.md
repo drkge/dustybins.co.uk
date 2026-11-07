@@ -1,5 +1,6 @@
 ---
 name: Meridian 110 Litre Cup and Liquids Recycling Bin
+description: 'Meridian 110 cup and liquids bin: a liquid reservoir plus 77 litres for cups in one space-saving unit for offices and canteens. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/plastic-recycling-bins

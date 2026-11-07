@@ -1,5 +1,6 @@
 ---
 name: Metro Hooded Litter Bin
+description: 'Metro Hooded litter bin, 85 to 120 litres, with double apertures for walk-by use and a hood that keeps rain out. Choose a colour. Ask us for a quote.'
 code: 243-BL
 categories:
 - recycle-hub/litter-bins

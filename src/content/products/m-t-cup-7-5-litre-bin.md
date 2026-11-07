@@ -1,5 +1,6 @@
 ---
 name: M-T Cup 7.5 Litre Bin
+description: 'M-T Cup bin for water coolers and vending machines: holds 500 cups plus a 7.5 litre reservoir for leftover drinks. Choose a lid and colour. Ask us for a quote.'
 code: 81887/1
 categories:
 - recycle-hub/internal-bins/cup-bins

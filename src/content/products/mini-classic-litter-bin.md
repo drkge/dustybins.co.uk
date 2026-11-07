@@ -1,5 +1,6 @@
 ---
 name: Mini Classic Litter Bin
+description: 'Mini Classic litter bin, 70 litres, the timeless Classic design in a smaller size for courtyards and paths. Choose colour and liner. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

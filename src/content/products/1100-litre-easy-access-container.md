@@ -1,5 +1,6 @@
 ---
 name: 1100 Litre Easy Access Container
+description: '1100 litre galvanised steel container with a low front opening for wheelchair users and easy access recycling. Choose body and lid colours. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/east-access-container
 - steel-wheelie-bins/four-wheeled-bins/1100-litre-capacity

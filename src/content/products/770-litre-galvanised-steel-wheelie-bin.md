@@ -1,5 +1,7 @@
 ---
 name: 770 Litre Galvanised Steel Wheelie Bin
+title: '770 Litre Galvanised Steel Wheelie Bin, 4 Wheel'
+description: 'Heavy duty 770 litre galvanised steel wheelie bin on four wheels, 308 kg max load. Rust resistant, with a choice of body and lid colours. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/four-wheeled-bins/770-litre-capacity
 images:

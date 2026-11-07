@@ -1,5 +1,6 @@
 ---
 name: Smart E-Consort Litter Bin
+description: 'Smart E-Consort litter bin made from recycled plastic, 85 to 100 litres, for parks, streets and schools. Made by Leafield, liner options. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

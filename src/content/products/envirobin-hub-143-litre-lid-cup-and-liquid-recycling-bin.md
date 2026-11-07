@@ -1,5 +1,7 @@
 ---
 name: Envirobin Hub 143 Litre Lid, Cup and Liquid Recycling Bin
+title: 'Envirobin Hub 143L Cup, Lid and Liquid Bin'
+description: 'Envirobin Hub cup recycling station: an EnvirocupXL for 500 cups and liquid plus a 43 litre Enviropod for lids, in one unit. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/plastic-recycling-bins

@@ -1,5 +1,6 @@
 ---
 name: Envirotruck 145 Litre Industrial Bin
+description: 'Envirotruck 145 litre industrial bin on castors for recycling and general waste in factories. Choose the aperture, base and colour. Ask us for a quote.'
 code: 221-HO-1
 categories:
 - recycle-hub/industrial-bins

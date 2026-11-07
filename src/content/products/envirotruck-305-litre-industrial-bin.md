@@ -1,5 +1,6 @@
 ---
 name: Envirotruck 305 Litre Industrial Bin
+description: 'Envirotruck 305 litre industrial bin on castors for high-volume waste in factories and warehouses. Choose the base, colour and label. Ask us for a quote.'
 categories:
 - recycle-hub/industrial-bins
 images:

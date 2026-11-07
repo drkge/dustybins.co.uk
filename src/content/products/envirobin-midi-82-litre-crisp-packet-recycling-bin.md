@@ -1,5 +1,7 @@
 ---
 name: Envirobin Midi 82 Litre Crisp Packet Recycling Bin
+title: Envirobin Midi 82L Crisp Packet Bin
+description: 'Envirobin Midi 82 litre crisp packet recycling bin for offices, break rooms and schools. Slim, labelled and made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/crisp-bins
 images:

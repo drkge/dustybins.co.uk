@@ -1,5 +1,7 @@
 ---
 name: Envirobin Mini 55 Litre Lift Lid Clinical Waste Bin
+title: Envirobin Mini 55L Clinical Waste Bin
+description: '55 litre lift-lid clinical waste bin with a built-in antimicrobial additive, for low-volume clinical waste in treatment rooms. Ask us for a quote.'
 categories:
 - recycle-hub/clinical-waste
 images:

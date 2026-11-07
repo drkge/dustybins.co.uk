@@ -1,5 +1,6 @@
 ---
 name: Envirobin Maxi 140 Litre Cup Recycling Bin
+description: 'Envirobin Maxi 140 litre cup recycling bin for high volumes of coffee cups in offices, stations and canteens. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 images:

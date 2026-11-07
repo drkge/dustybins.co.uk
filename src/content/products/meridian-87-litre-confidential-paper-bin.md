@@ -1,5 +1,6 @@
 ---
 name: Meridian 87 Litre Confidential Paper Bin
+description: Meridian 87 litre lockable confidential paper bin for secure office document disposal. Made by Leafield. Ask us for a quote.
 categories:
 - recycle-hub/confidential-paper-bins
 - recycle-hub/paper-recycling-bins

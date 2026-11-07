@@ -1,5 +1,6 @@
 ---
 name: Super Monarch Litter Bin
+description: 'Super Monarch litter bin, 85 litres, a larger version of the Monarch for busier indoor and outdoor sites. Choose a colour and bin liner. Ask us for a quote.'
 code: 233-BL
 categories:
 - recycle-hub/litter-bins

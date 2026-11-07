@@ -1,5 +1,7 @@
 ---
 name: 240 Litre Plastic Wheelie Bin
+title: '240 Litre Wheelie Bin, Plastic, 2 Wheel'
+description: 'Standard 240 litre two-wheeled plastic wheelie bin by CONTENUR, 96 kg max load. Choose bin and lid colours to match council or site schemes. Ask us for a quote.'
 code: 179-BL-BL
 categories:
 - plastic-wheelie-bins/two-wheeled-bins/240-litre-capacity

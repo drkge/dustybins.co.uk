@@ -1,5 +1,6 @@
 ---
 name: Consort Litter Bin
+description: 'Consort litter bin by Leafield, 85 to 100 litres, in tough UV stabilised plastic for indoor and outdoor sites. Choose a colour and liner. Ask us for a quote.'
 code: 238-BL
 categories:
 - recycle-hub/litter-bins

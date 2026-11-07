@@ -1,5 +1,6 @@
 ---
 name: 500 Litre Recycling Container
+description: '500 litre galvanised steel recycling container for comb lift vehicles, 200 kg max load. Choose a lid layout and body colour. Ask us for a quote.'
 code: 163-SL
 categories:
 - steel-wheelie-bins/recycling-container
@@ -8,7 +9,7 @@ images:
 - 1713370258-1280-1280.png
 - 500.jpg
 specs:
-  Capacity: 660 Litres
+  Capacity: 500 Litres
   Max Load: 200 kg
   Height: 1080 mm
   Width: 1260 mm

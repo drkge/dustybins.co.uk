@@ -1,5 +1,6 @@
 ---
 name: Smart E-Metro Litter Bin
+description: 'Smart E-Metro litter bin made from recycled plastic, 85 litres, a compact modern bin for tight spaces indoors and out. Liner options. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

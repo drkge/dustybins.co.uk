@@ -1,5 +1,7 @@
 ---
 name: EnviroStep 90 Litre (3x30L) Recycling Bin (Triple)
+title: EnviroStep 90L Triple Pedal Recycling Bin
+description: 'Pedal-operated triple recycling bin with three 30 litre compartments for kitchens, washrooms and food halls. Choose each waste stream. Ask us for a quote.'
 code: 81892/104-MI-GE-PA
 categories:
 - recycle-hub/internal-bins/envirostep

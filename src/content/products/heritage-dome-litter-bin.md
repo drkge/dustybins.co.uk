@@ -1,5 +1,6 @@
 ---
 name: Heritage Dome Litter Bin
+description: 'Heritage Dome litter bin with a traditional look, 110 to 130 litres, in durable UV stabilised plastic. Choose a body colour and liner. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

@@ -1,5 +1,6 @@
 ---
 name: 1100 Litre Blue Planet Container
+description: '1100 litre galvanised steel recycling bin printed with Blue Planet artwork that nudges people to recycle. Choose a body colour. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/four-wheeled-bins/500-litre-capacity
 - steel-wheelie-bins/blue-planet-containers

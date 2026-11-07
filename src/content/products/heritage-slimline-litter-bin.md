@@ -1,5 +1,6 @@
 ---
 name: Heritage Slimline Litter Bin
+description: 'Heritage Slimline litter bin, 72 litres, a slim traditional bin for narrow pavements, with optional seagull flaps. Choose a colour. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

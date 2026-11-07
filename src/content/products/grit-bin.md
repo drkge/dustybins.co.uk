@@ -1,5 +1,7 @@
 ---
 name: Grit Bin
+title: 'Grit Bin, 200 or 400 Litre'
+description: 'Plastic grit bin in 200 or 400 litre sizes for storing salt, grit or tools outdoors over winter. Weatherproof lid, optional lock. Ask us for a quote.'
 categories:
 - recycle-hub/grit-bins
 images:

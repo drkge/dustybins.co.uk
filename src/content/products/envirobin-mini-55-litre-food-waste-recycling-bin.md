@@ -1,5 +1,6 @@
 ---
 name: Envirobin Mini 55 Litre Food Waste Recycling Bin
+description: 'Envirobin Mini 55 litre food waste bin, a compact lift-lid bin for desksides and small office kitchens. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/food-waste-bins
 images:

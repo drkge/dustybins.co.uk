@@ -33,9 +33,10 @@ const firstParagraph = (product.entry.body ?? "")
   .map((block) => block.replace(/[*_#>`]/g, "").trim())
   .find((block) => block.length > 60 && !block.startsWith("-"));
 const description =
-  firstParagraph && firstParagraph.length <= 300
+  product.description ??
+  (firstParagraph && firstParagraph.length <= 300
     ? firstParagraph
-    : `${product.name}${product.specs["Capacity"] ? `, ${product.specs["Capacity"].toLowerCase()}` : ""}, from Dusty Bins. Choose your options and ask us for a quote.`;
+    : `${product.name}${product.specs["Capacity"] ? `, ${product.specs["Capacity"].toLowerCase()}` : ""}, from Dusty Bins. Choose your options and ask us for a quote.`);
 
 const socialImage = product.photos[0] ? (await getImage({ src: product.photos[0], format: "png", width: Math.min(1200, product.photos[0].width) })).src : undefined;
 
@@ -46,7 +47,7 @@ const NONE = "None";
 ---
 
 <BaseLayout
-  title={product.name}
+  title={product.title ?? product.name}
   description={description}
   image={socialImage}
   schema={[breadcrumbList(trail)]}

@@ -1,5 +1,7 @@
 ---
 name: 140 Litre Plastic Wheelie Bin
+title: '140 Litre Wheelie Bin, Plastic, 2 Wheel'
+description: '140 litre two-wheeled plastic wheelie bin by CONTENUR, 56 kg max load, 1066 mm high. Pick your bin and lid colours for any waste stream. Ask us for a quote.'
 code: 177-BL-BL
 categories:
 - plastic-wheelie-bins/two-wheeled-bins/140-litre-capacity

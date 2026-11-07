@@ -1,5 +1,6 @@
 ---
 name: AquaPod Liquids Bin
+description: 'AquaPod liquids bin with a 9.5 litre reservoir for leftover drinks, so cups go in the recycling dry. Easy to carry and clean. Ask us for a quote.'
 code: 81911/4/G2
 categories:
 - recycle-hub/internal-bins/aquapod

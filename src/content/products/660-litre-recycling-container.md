@@ -1,5 +1,6 @@
 ---
 name: 660 Litre Recycling Container
+description: '660 litre galvanised steel recycling container for comb lift vehicles, 264 kg max load. Choose a lid layout and body colour. Ask us for a quote.'
 code: 162-SL
 categories:
 - steel-wheelie-bins/recycling-container

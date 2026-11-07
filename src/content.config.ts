@@ -33,6 +33,10 @@ const products = defineCollection({
   loader: glob({ base: "./src/content/products", pattern: "*.md" }),
   schema: z.object({
     name: z.string(),
+    /** Search result title, if the name alone doesn't say what it is. Keep it under 50 characters. */
+    title: z.string().max(60).optional(),
+    /** Search result description, 120 to 155 characters. Defaults to the first paragraph of the body. */
+    description: z.string().max(160).optional(),
     /** Product code / SKU, shown on the page and in enquiries. */
     code: z.string().optional(),
     /** The categories it's listed in. It also shows in their parent categories automatically. */

@@ -1,5 +1,6 @@
 ---
 name: 1280 Litre Recycling Container
+description: '1280 litre galvanised steel recycling container for comb lift vehicles, 440 kg max load. Pick your lid apertures and body colour. Ask us for a quote.'
 code: 159-SL
 categories:
 - steel-wheelie-bins/four-wheeled-bins/1280-litre-capacity

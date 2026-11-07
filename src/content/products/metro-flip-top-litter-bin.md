@@ -1,5 +1,6 @@
 ---
 name: Metro Flip-Top Litter Bin
+description: 'Metro Flip-Top litter bin, 100 to 120 litres, a modern bin whose flap hides waste from view. Compact footprint, choice of colours. Ask us for a quote.'
 code: 246-BL
 categories:
 - recycle-hub/litter-bins

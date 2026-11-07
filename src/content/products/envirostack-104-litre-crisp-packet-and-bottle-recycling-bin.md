@@ -1,5 +1,7 @@
 ---
 name: EnviroStack 104 Litre Crisp Packet and Bottle Recycling Bin
+title: EnviroStack 104L Crisp Packet and Bottle Bin
+description: 'Two 52 litre EnviroStack units in one tower for crisp packets and bottles, in a 400 x 333 mm footprint. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/crisp-bins
 - recycle-hub/plastic-recycling-bins

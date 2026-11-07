@@ -1,5 +1,6 @@
 ---
 name: Envirotruck 100 Litre Industrial Bin
+description: 'Envirotruck 100 litre industrial bin on castors for factories and warehouses. Tough plastic, choice of aperture, base and colour. Ask us for a quote.'
 code: 221-HO
 categories:
 - recycle-hub/industrial-bins

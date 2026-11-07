@@ -1,5 +1,6 @@
 ---
 name: Maxi 140 Litre Confidential Paper Bin
+description: Lockable 140 litre confidential paper bin for offices that shred large volumes of sensitive documents. Envirobin Maxi by Leafield. Ask us for a quote.
 categories:
 - recycle-hub/confidential-paper-bins
 - recycle-hub/paper-recycling-bins

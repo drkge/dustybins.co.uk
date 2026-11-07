@@ -1,5 +1,7 @@
 ---
 name: Salt Box
+title: 'Salt and Grit Box, 21 to 90 Litre'
+description: 'Compact salt and grit box in 21, 63 or 90 litre sizes, holding 10 to 30 kg of salt, for steps, car parks and entrances. Ask us for a quote.'
 code: 226-21
 categories:
 - recycle-hub/grit-bins

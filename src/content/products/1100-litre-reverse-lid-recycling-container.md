@@ -1,5 +1,6 @@
 ---
 name: 1100 Litre Reverse Lid Recycling Container
+description: '1100 litre steel recycling container with a reverse lid that cuts contamination in dry mixed recycling. Galvanised body, choice of colours. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/recycling-container
 - steel-wheelie-bins/four-wheeled-bins/1100-litre-capacity

@@ -1,5 +1,7 @@
 ---
 name: 500 Litre Galvanised Steel Wheelie Bin
+title: '500 Litre Galvanised Steel Wheelie Bin, 4 Wheel'
+description: 'Heavy duty 500 litre galvanised steel wheelie bin on four wheels, 200 kg max load. Rust resistant, with a choice of body and lid colours. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/four-wheeled-bins/500-litre-capacity
 images:

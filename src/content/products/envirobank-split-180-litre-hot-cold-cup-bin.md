@@ -1,5 +1,6 @@
 ---
 name: Envirobank Split 180 Litre Hot & Cold Cup Bin
+description: 'Envirobank Split cup bin with two 90 litre compartments for hot and cold drink cups, 1398 mm high. Ideal for cafés and canteens. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 images:

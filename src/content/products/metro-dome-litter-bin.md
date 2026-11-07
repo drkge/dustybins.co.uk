@@ -1,5 +1,6 @@
 ---
 name: Metro Dome Litter Bin
+description: 'Metro Dome litter bin, 85 to 120 litres, a modern domed bin with a compact 470 mm footprint for lobbies and streets. Choose lid colour. Ask us for a quote.'
 categories:
 - recycle-hub/litter-bins
 images:

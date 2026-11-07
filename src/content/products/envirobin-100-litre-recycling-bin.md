@@ -1,5 +1,6 @@
 ---
 name: Envirobin 100 Litre Recycling Bin
+description: 'Envirobin 100 litre recycling bin by Leafield, a high-capacity office bin with a choice of lids for paper, cans, plastic or general waste. Ask us for a quote.'
 code: 81155-OP
 categories:
 - recycle-hub/internal-bins/envirobin

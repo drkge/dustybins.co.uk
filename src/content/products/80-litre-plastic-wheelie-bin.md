@@ -1,5 +1,7 @@
 ---
 name: 80 Litre Plastic Wheelie Bin
+title: '80 Litre Wheelie Bin, Plastic, 2 Wheel'
+description: 'Small 80 litre two-wheeled plastic wheelie bin by CONTENUR, 32 kg max load, 940 mm high. Mix and match bin and lid colours. Ask us for a quote.'
 code: 175-BL-BL
 categories:
 - plastic-wheelie-bins/two-wheeled-bins/80-litre-capacity

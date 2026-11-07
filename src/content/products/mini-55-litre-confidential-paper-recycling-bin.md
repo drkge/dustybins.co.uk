@@ -1,5 +1,6 @@
 ---
 name: Mini 55 Litre Confidential Paper Recycling Bin
+description: 'Lockable 55 litre confidential paper bin that fits beside a desk, for small volumes of sensitive documents. Envirobin Mini by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/confidential-paper-bins
 - recycle-hub/paper-recycling-bins

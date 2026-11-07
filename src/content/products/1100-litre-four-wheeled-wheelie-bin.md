@@ -1,5 +1,7 @@
 ---
 name: 1100 Litre Four Wheeled Wheelie Bin
+title: '1100 Litre Wheelie Bin, Plastic, 4 Wheel'
+description: '1100 litre four-wheeled plastic wheelie bin by CONTENUR, 440 kg max load, on 200 mm wheels. Choose bin and lid colours for commercial waste. Ask us for a quote.'
 code: 183-BL-BL
 categories:
 - plastic-wheelie-bins/four-wheeled-bins/1100-litre-capacity

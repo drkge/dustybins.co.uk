@@ -1,5 +1,6 @@
 ---
 name: Envirocup Plastic Cup Bin
+description: 'Envirocup plastic cup bin: stacks up to 500 plastic cups and drains liquid into a 7.5 litre reservoir for cleaner cup recycling. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/liquid-waste-bins

@@ -1,5 +1,6 @@
 ---
 name: Octaplus Midi Litter Bin
+description: 'Octaplus Midi litter bin, 60 to 95 litres, a hard-wearing octagonal bin for schools and forecourts, with an optional anchor plate. Ask us for a quote.'
 code: 235-BL
 categories:
 - recycle-hub/litter-bins

@@ -1,5 +1,6 @@
 ---
 name: EnviroGo 90 Litre PPE Recycling Bin
+description: 'EnviroGo PPE recycling bin for used gloves and face masks, keeping them out of your general recycling. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/clinical-waste
 images:

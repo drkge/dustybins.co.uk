@@ -1,5 +1,6 @@
 ---
 name: Envirobin 100 Litre Food Waste Recycling Bin
+description: 'Envirobin 100 litre food waste bin with a lift lid, for busy kitchens, canteens and offices. Robust and easy to clean. By Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/food-waste-bins
 images:

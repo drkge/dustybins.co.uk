@@ -1,5 +1,6 @@
 ---
 name: Enviropod 33 Litre Crisp Packet Bin
+description: 'Enviropod 33 litre crisp packet bin with a flat back that sits against a wall or desk. A compact, low-cost way to recycle crisp packets. Ask us for a quote.'
 categories:
 - recycle-hub/crisp-bins
 images:

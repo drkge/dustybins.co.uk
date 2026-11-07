@@ -1,5 +1,6 @@
 ---
 name: Octaplus Jumbo Litter Bin
+description: 'Octaplus Jumbo litter bin, 150 litres, the largest heavy-duty octagonal bin for high-traffic outdoor sites. Optional anchor plate. Ask us for a quote.'
 code: 237-BL
 categories:
 - recycle-hub/litter-bins

@@ -1,5 +1,6 @@
 ---
 name: 1280 Litre Easy Access Container
+description: '1280 litre galvanised steel container with a low front opening, so wheelchair users can recycle easily. Choose body and lid colours. Ask us for a quote.'
 categories:
 - steel-wheelie-bins/four-wheeled-bins/1280-litre-capacity
 - steel-wheelie-bins/east-access-container

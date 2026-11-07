@@ -1,5 +1,7 @@
 ---
 name: Envirobin Mini 55 Litre Crisp Packet Recycling Bin
+title: Envirobin Mini 55L Crisp Packet Bin
+description: 'Envirobin Mini 55 litre crisp packet recycling bin, compact enough for desksides, break rooms and classrooms. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/crisp-bins
 images:

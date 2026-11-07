@@ -1,5 +1,6 @@
 ---
 name: Envirobin Midi 82 Litre Recycling Bin
+description: 'Envirobin Midi 82 litre recycling bin by Leafield, slim enough for offices, with WRAP colour lids for any waste stream. Ask us for a quote.'
 code: 81720-OR
 categories:
 - recycle-hub/internal-bins/envirobin-midi

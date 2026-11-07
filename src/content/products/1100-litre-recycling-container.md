@@ -1,5 +1,6 @@
 ---
 name: 1100 Litre Recycling Container
+description: '1100 litre galvanised steel recycling container for comb lift vehicles. Choose apertures, a lid layout and body colour to suit your waste. Ask us for a quote.'
 code: 160-SL
 categories:
 - steel-wheelie-bins/recycling-container

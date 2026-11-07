@@ -1,5 +1,6 @@
 ---
 name: EcoArc 80L Recycling Bin
+description: EcoArc 80 litre outdoor recycling bin that groups side by side or back to back. Choose apertures and colours for each waste stream. Ask us for a quote.
 code: 81962/1-GR
 categories:
 - recycle-hub/external-bin/ecoarc

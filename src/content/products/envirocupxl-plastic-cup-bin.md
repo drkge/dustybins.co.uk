@@ -1,5 +1,6 @@
 ---
 name: EnvirocupXL Plastic Cup Bin
+description: 'EnvirocupXL plastic cup bin: stacks 500 plastic cups up to 103 mm wide, with a 7.5 litre liquid reservoir to keep recycling clean. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/liquid-waste-bins

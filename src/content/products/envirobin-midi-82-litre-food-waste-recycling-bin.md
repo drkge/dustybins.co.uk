@@ -1,5 +1,6 @@
 ---
 name: Envirobin Midi 82 Litre Food Waste Recycling Bin
+description: 'Envirobin Midi 82 litre food waste bin with a lift lid, slim enough for office kitchens and break rooms. Made by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/food-waste-bins
 images:

@@ -1,5 +1,6 @@
 ---
 name: Envirobin 100 Litre Cup Recycling Bin
+description: 'Envirobin 100 cup recycling bin: nests 500 cups and collects 7.5 litres of liquid, so you can empty it less often. By Leafield. Ask us for a quote.'
 code: 81155/51
 categories:
 - recycle-hub/internal-bins/envirobin

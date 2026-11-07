@@ -1,5 +1,7 @@
 ---
 name: EnviroStack 32 Litre Recycling Bin (Upper Stack)
+title: EnviroStack 32L Stacking Recycling Bin
+description: 'EnviroStack 32 litre stacking recycling bin: stack units to sort several waste streams in a small footprint. WRAP colour lids. Ask us for a quote.'
 code: 81904/32/G2-BL
 categories:
 - recycle-hub/internal-bins/envirostack

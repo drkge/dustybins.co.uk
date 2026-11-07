@@ -1,5 +1,6 @@
 ---
 name: Octaplus Maxi Litter Bin
+description: 'Octaplus Maxi litter bin, 117 to 140 litres, a heavy-duty octagonal bin for busy schools and forecourts. Optional anchor plate. Ask us for a quote.'
 code: 236-BL
 categories:
 - recycle-hub/litter-bins

@@ -1,5 +1,6 @@
 ---
 name: Midi 82 Litre Confidential Paper Bin
+description: 'Lockable 82 litre confidential paper bin with a slim footprint, for medium volumes of sensitive documents. Envirobin Midi by Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/confidential-paper-bins
 - recycle-hub/paper-recycling-bins

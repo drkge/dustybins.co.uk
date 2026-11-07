@@ -1,5 +1,6 @@
 ---
 name: Envirobin Mini 55 Litre Recycling Bin
+description: 'Envirobin Mini 55 litre recycling bin, compact for desksides and small offices, with WRAP colour lids and labels for any waste stream. Ask us for a quote.'
 code: 81691-OR
 categories:
 - recycle-hub/internal-bins/envirobin-mini

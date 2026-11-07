@@ -16,7 +16,13 @@ interface Props {
 
 const { title, description = SITE_DESCRIPTION, image = OG_IMAGE.src, schema = [], noindex = false } = Astro.props;
 
-const pageTitle = title === SITE_TITLE ? `${SITE_TITLE} — ${SITE_TAGLINE}` : `${title} | ${SITE_TITLE}`;
+// Google cuts titles at about 60 characters, so drop the site name rather than the end of the title.
+const pageTitle =
+  title === SITE_TITLE
+    ? `${SITE_TITLE} — ${SITE_TAGLINE}`
+    : `${title} | ${SITE_TITLE}`.length <= 60
+      ? `${title} | ${SITE_TITLE}`
+      : title;
 const canonicalURL = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(image, Astro.site).href;
 

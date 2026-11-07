@@ -1,5 +1,7 @@
 ---
 name: 180 Litre Plastic Wheelie Bin
+title: '180 Litre Wheelie Bin, Plastic, 2 Wheel'
+description: '180 litre two-wheeled plastic wheelie bin by CONTENUR, 72 kg max load. A popular household and business size in your choice of colours. Ask us for a quote.'
 code: 178-BL-BL
 categories:
 - plastic-wheelie-bins/two-wheeled-bins/180-litre-capacity

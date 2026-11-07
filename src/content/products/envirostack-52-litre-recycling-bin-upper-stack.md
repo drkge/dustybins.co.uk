@@ -1,5 +1,7 @@
 ---
 name: EnviroStack 52 Litre Recycling Bin (Upper Stack)
+title: EnviroStack 52L Stacking Recycling Bin
+description: 'EnviroStack 52 litre stacking recycling bin: build a tower to sort waste streams in tight office spaces. WRAP colour lids and labels. Ask us for a quote.'
 code: 81904/12-BL
 categories:
 - recycle-hub/internal-bins/envirostack

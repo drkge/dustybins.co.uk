@@ -1,5 +1,6 @@
 ---
 name: Envirobin Split 100 Litre Recycling Bin
+description: 'Envirobin Split 100 litre recycling bin with two compartments and a hidden liner holder, for sorting two waste streams indoors. Ask us for a quote.'
 code: 81155/Split
 categories:
 - recycle-hub/internal-bins/envirobin

@@ -1,5 +1,6 @@
 ---
 name: Envirocup Paper Cup Bin
+description: 'Envirocup paper cup bin: nests up to 500 paper cups and catches liquid in a 7.5 litre reservoir, so cups can be recycled cleanly. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/liquid-waste-bins

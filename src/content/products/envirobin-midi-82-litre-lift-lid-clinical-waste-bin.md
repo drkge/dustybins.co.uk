@@ -1,5 +1,7 @@
 ---
 name: 'Envirobin Midi 82 Litre Lift Lid: Clinical Waste Bin'
+title: Envirobin Midi 82L Clinical Waste Bin
+description: '82 litre lift-lid clinical waste bin with a built-in antimicrobial additive, for surgeries, care homes and clinics. By Leafield. Ask us for a quote.'
 categories:
 - recycle-hub/clinical-waste
 images:

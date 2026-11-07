@@ -1,5 +1,6 @@
 ---
 name: Viscount Flip-Top Litter Bin
+description: 'Viscount Flip-Top litter bin, 110 to 130 litres, a simple bin whose flip top keeps waste out of sight indoors or out. Choose a colour. Ask us for a quote.'
 code: 242-BL
 categories:
 - recycle-hub/litter-bins

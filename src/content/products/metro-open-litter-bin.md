@@ -1,5 +1,6 @@
 ---
 name: Metro Open Litter Bin
+description: 'Metro Open litter bin, 85 litres, a modern open-top bin with a compact 470 mm footprint for lobbies, offices and streets. Choose a colour. Ask us for a quote.'
 code: 244-BL
 categories:
 - recycle-hub/litter-bins

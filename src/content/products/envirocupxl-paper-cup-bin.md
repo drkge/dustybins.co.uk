@@ -1,5 +1,6 @@
 ---
 name: EnvirocupXL Paper Cup Bin
+description: 'EnvirocupXL paper cup bin: nests 500 coffee cups up to 103 mm wide, with a 7.5 litre liquid reservoir. Less emptying, cleaner recycling. Ask us for a quote.'
 categories:
 - recycle-hub/internal-bins/cup-bins
 - recycle-hub/liquid-waste-bins
